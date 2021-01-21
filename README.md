@@ -26,7 +26,7 @@ use Cartware\CustomBase\CustomBase;
 
 class Base12 {
 	use CustomBase;
-	protected $alphabet = '0123456789AB';
+	protected const CUSTOMBASE_ALPHABET = '0123456789AB';
 }
 ```
 

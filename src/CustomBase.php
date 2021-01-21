@@ -6,14 +6,9 @@ namespace Cartware\CustomBase;
 trait CustomBase {
 
 	/**
-	 * @var string
-	 */
-	protected $alphabet = '0123456789adfhijklmoqruwxy';
-
-	/**
 	 * @var String[]
 	 */
-	private $alphabetArray;
+	private static $customBaseAlphabetArray;
 
 	/**
 	 * @param int $number
@@ -24,7 +19,7 @@ trait CustomBase {
 		$alphabetArray = $this->getCustomBaseAlphabetTokens();
 		$alphabetLength = count($alphabetArray);
 
-		if ($number < ($alphabetLength - 1)) {
+		if ($number <= ($alphabetLength - 1)) {
 			return $alphabetArray[$number];
 		}
 
@@ -49,7 +44,7 @@ trait CustomBase {
 	private function _decode(array $tokens, $step = 0): int
 	{
 		$head = array_shift($tokens);
-		$result = $this->decodeChar($head) * $this->pow(strlen($this->alphabet), $step);
+		$result = $this->decodeChar($head) * $this->pow(count($this->getCustomBaseAlphabetTokens()), $step);
 		return $result + (empty($tokens) ? 0 : $this->_decode($tokens, $step + 1));
 	}
 
@@ -88,12 +83,19 @@ trait CustomBase {
 	/**
 	 * @return array
 	 */
+	protected function getCustomBaseAlphabet(): string {
+		return constant(__CLASS__ . '::CUSTOMBASE_ALPHABET') ?? '0123456789adfhijklmoqruwxy';
+	}
+
+	/**
+	 * @return array
+	 */
 	protected function getCustomBaseAlphabetTokens(): array {
-		if ($this->alphabetArray === NULL) {
-			$this->alphabetArray = str_split($this->alphabet);
+		if (self::$customBaseAlphabetArray === NULL) {
+			self::$customBaseAlphabetArray = str_split($this->getCustomBaseAlphabet());
 		}
 
-		return $this->alphabetArray;
+		return self::$customBaseAlphabetArray;
 	}
 
 }
