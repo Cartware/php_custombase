@@ -2,7 +2,6 @@
 	"name": "cartware/custombase",
 	"type": "library",
 	"description": "A PHP port of Elixir's CustomBase module",
-	"version": "0.1.0",
 	"keywords": [
 		"identifier"
 	],
